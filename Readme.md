@@ -53,4 +53,36 @@ Now we have the more friendly name “ourfiglet” that we can use to identify o
         REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
         ourfiglet           latest              a104f9ae9c37        5 minutes ago       160MB
         ubuntu              latest              14f60031763d        4 days ago          120MB
+    
+### Image creation using a Dockerfile
+
+Type the following content into a file named index.js. You can use vi, vim or several other Linux editors in this exercise. If you need assistance with the Linux editor commands to do this follow this footnote2.
+
+      var os = require("os");
+      var hostname = os.hostname();
+      console.log("hello from " + hostname);
+    
+Create a file named Dockerfile and copy the following content into it. Again, help creating this file with Linux editors is here 3.
+
+      FROM alpine
+      RUN apk update && apk add nodejs
+      COPY . /app
+      WORKDIR /app
+      CMD ["node","index.js"]
+   
+Let’s build our first image out of this Dockerfile and name it hello:v0.1:
+
+      docker image build -t hello:v0.1 .
+    
+We then start a container to check that our applications runs correctly:
+
+      docker container run hello:v0.1
+
+You should then have an output similar to the following one (the ID will be different though).
+
+      hello from 92d79b6de29f
+
+
+
+
 
